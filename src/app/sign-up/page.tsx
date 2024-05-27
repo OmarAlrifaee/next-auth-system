@@ -40,7 +40,7 @@ const SignUp = () => {
         className="flex flex-col items-center gap-8"
         onSubmit={onSubmit}
       >
-        <h1 className="text-6xl font-bold">Signup</h1>
+        <h1 className="text-6xl font-bold mb-5">Signup</h1>
         {error ? <span>something went wronge please try agine</span> : ""}
         <div className="flex items-center gap-3 relative">
           <label htmlFor="username" className="absolute top-[-24px]">
