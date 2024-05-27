@@ -12,7 +12,10 @@ export function middleware(request: NextRequest) {
     // i should redirect the user to the home page cuz he already authrized
     return NextResponse.redirect(new URL("/", request.url));
   }
-  // here check if the request is not to a public path |and| the token is not exist i should redirect the user and let him login first or create an accunt
+  /* 
+    here check if the request is not to a public path |and| the token is not exist 
+    i should redirect the user and let him login first or create an accunt 
+  */
   if (!isPublicPath && !token) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
