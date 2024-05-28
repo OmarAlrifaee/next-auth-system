@@ -70,9 +70,14 @@ const Login = () => {
         >
           Login
         </button>
-        <Link href={"/sign-up"} className="text-blue-500 underline">
-          Signup
-        </Link>
+        <div className="flex justify-between items-center">
+          <Link href={"/sign-up"} className="text-blue-500 underline">
+            Signup
+          </Link>
+          <Link href={"/forgot-password"} className="text-blue-500 underline">
+            forgot password
+          </Link>
+        </div>
       </form>
     </section>
   );

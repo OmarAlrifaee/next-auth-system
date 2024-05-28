@@ -5,7 +5,11 @@ export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
   // check if the request from a public path
   const isPublicPath =
-    path === "/login" || path === "/sign-up" || path === "/verifyemail";
+    path === "/login" ||
+    path === "/sign-up" ||
+    path === "/verifyemail" ||
+    path === "/verifypassword" ||
+    path === "/forgot-password";
   // get the cookie if it's exist
   const token = request.cookies.get("token")?.value;
   // now check if the request is to public path |and| the token is exist
