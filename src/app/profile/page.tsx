@@ -8,6 +8,7 @@ type UserType = {
   _id: string;
   username: string;
   isAdmin: boolean;
+  isVerified: boolean;
 };
 const Profile = () => {
   const [user, setUser] = useState<UserType>();
@@ -25,7 +26,10 @@ const Profile = () => {
   return (
     <section className="flex justify-center items-center min-h-screen">
       <div className="flex flex-col gap-5 items-center">
-        <h1 className="text-6xl font-bold mb-5">Hello {user?.username}</h1>
+        <h1 className="text-6xl font-bold mb-5">
+          Hello {user?.username} {user?.isVerified ? "You Are Verified" : ""}
+        </h1>
+        {user?.isAdmin ? <h2>You Are Admin</h2> : ""}
         <Link
           href={`/profile/${user?._id}`}
           className="bg-blue-500 px-5 py-2 text-white font-semibold rounded-md"

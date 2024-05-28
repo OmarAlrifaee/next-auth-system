@@ -12,10 +12,10 @@ export const POST = async (req: NextRequest) => {
       verifyToken: token,
       verifyTokenExpiry: { $gt: Date.now() },
     });
+    console.log(user);
     if (!user) {
       return NextResponse.json({ error: "Invalid token" }, { status: 400 });
     }
-    console.log(user);
     user.isVerified = true;
     user.verifyToken = undefined;
     user.verifyTokenExpiry = undefined;
