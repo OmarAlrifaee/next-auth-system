@@ -3,6 +3,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Loader from "@/components/Loader";
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
@@ -10,6 +11,7 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
   const router = useRouter();
   // functions
   const onSubmit = async (e: React.FormEvent) => {
@@ -20,9 +22,9 @@ const Login = () => {
         email: user.email,
         password: user.password,
       });
-      console.log(data);
       if (data) {
         setError(false);
+        setSuccess(true);
         router.replace("/profile");
       }
     } catch (error) {
@@ -47,6 +49,7 @@ const Login = () => {
             id="email"
             placeholder="email"
             value={user.email}
+            required
             onChange={(e) => setUser({ ...user, email: e.target.value })}
           />
         </div>
@@ -58,25 +61,28 @@ const Login = () => {
             className="border px-3 py-1 focus:outline-none"
             type="password"
             id="password"
+            required
             placeholder="password"
             value={user.password}
             onChange={(e) => setUser({ ...user, password: e.target.value })}
           />
         </div>
-        <button
-          type="submit"
-          className="bg-blue-500 px-5 py-2 text-white font-bold"
-          disabled={loading}
-        >
-          Login
-        </button>
-        <div className="flex justify-between items-center">
-          <Link href={"/sign-up"} className="text-blue-500 underline">
-            Signup
-          </Link>
-          <Link href={"/forgot-password"} className="text-blue-500 underline">
-            forgot password
-          </Link>
+        <div className="flex flex-col items-center gap-3">
+          <button
+            type="submit"
+            className="bg-blue-500 px-5 py-2 text-white font-bold"
+            disabled={loading || success}
+          >
+            {loading ? <Loader /> : "Login"}
+          </button>
+          <div className="flex items-center gap-10 w-full">
+            <Link href={"/sign-up"} className="text-blue-500 underline">
+              Signup
+            </Link>
+            <Link href={"/forgot-password"} className="text-blue-500 underline">
+              forgot password?
+            </Link>
+          </div>
         </div>
       </form>
     </section>
