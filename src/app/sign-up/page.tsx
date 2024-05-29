@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Loader from "@/components/Loader";
+import toast from "react-hot-toast";
 const SignUp = () => {
   const [user, setUser] = useState({
     email: "",
@@ -11,7 +12,6 @@ const SignUp = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
   // functions
@@ -25,15 +25,15 @@ const SignUp = () => {
         password: user.password,
       });
       if (data) {
-        setError(false);
         setSuccess(true);
+        toast.success("you signed up successfully");
         setTimeout(() => {
           router.replace("/login");
         }, 2000);
       }
     } catch (error) {
       console.log(error);
-      setError(true);
+      toast.error("something went wronge please try agine");
     } finally {
       setLoading(false);
     }
@@ -46,14 +46,6 @@ const SignUp = () => {
         onSubmit={onSubmit}
       >
         <h1 className="text-6xl font-bold mb-5">Signup</h1>
-        {error ? (
-          <span className="text-red-500">
-            something went wronge please try agine
-          </span>
-        ) : (
-          ""
-        )}
-        {success ? <p className="text-green-500">Created Successfully</p> : ""}
         <div className="flex items-center gap-3 relative">
           <label htmlFor="username" className="absolute top-[-24px]">
             username:

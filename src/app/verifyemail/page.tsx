@@ -4,6 +4,7 @@ import Loader from "@/components/Loader";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const VerifyEmail = ({ searchParams }: { searchParams: { token: string } }) => {
   const router = useRouter();
@@ -18,12 +19,14 @@ const VerifyEmail = ({ searchParams }: { searchParams: { token: string } }) => {
             token: searchParams.token,
           });
           setSuccess(true);
+          toast.success("Your Email Has Been Verified");
           setTimeout(() => {
             router.push("/login");
           }, 2000);
         } catch (error: any) {
           setSuccess(false);
           console.log(error.message);
+          toast.error("something went wronge please try agine");
         } finally {
           setLoading(false);
         }
@@ -33,11 +36,6 @@ const VerifyEmail = ({ searchParams }: { searchParams: { token: string } }) => {
   return (
     <section className="flex flex-col gap-5 items-center justify-center">
       {loading ? <h2 className="text-4xl">Verifing...</h2> : ""}
-      {success ? (
-        <p className="text-green-500">Your Email Has Been Verified</p>
-      ) : (
-        ""
-      )}
     </section>
   );
 };

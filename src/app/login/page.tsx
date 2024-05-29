@@ -4,13 +4,13 @@ import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
+import toast from "react-hot-toast";
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
   // functions
@@ -23,13 +23,15 @@ const Login = () => {
         password: user.password,
       });
       if (data) {
-        setError(false);
         setSuccess(true);
-        router.replace("/profile");
+        toast.success("you logged in successfully");
+        setTimeout(() => {
+          router.replace("/profile");
+        }, 2000);
       }
     } catch (error) {
       console.log(error);
-      setError(true);
+      toast.error("something went wronge please try agine");
     } finally {
       setLoading(false);
     }
@@ -38,7 +40,6 @@ const Login = () => {
     <section className="min-h-screen flex justify-center items-center">
       <form className="flex flex-col items-center gap-8" onSubmit={onSubmit}>
         <h1 className="text-6xl font-bold mb-5">Login</h1>
-        {error ? <span>something went wronge</span> : ""}
         <div className="relative">
           <label htmlFor="email" className="absolute top-[-24px]">
             email:

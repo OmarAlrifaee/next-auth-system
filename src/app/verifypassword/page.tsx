@@ -4,6 +4,7 @@ import Loader from "@/components/Loader";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const VerifyPassword = ({
   searchParams,
@@ -23,12 +24,14 @@ const VerifyPassword = ({
         newPassword: password,
       });
       setSuccess(true);
+      toast.success("your password have been changed successfully");
       setTimeout(() => {
         router.replace("/login");
       }, 2000);
     } catch (error) {
       setSuccess(false);
       console.log(error);
+      toast.error("something went wronge please try agine");
     } finally {
       setLoading(false);
     }
@@ -37,13 +40,6 @@ const VerifyPassword = ({
     <section className="min-h-screen flex flex-col items-center justify-center">
       <form onSubmit={onSubmit} className="flex flex-col items-center gap-8">
         <h2 className="text-4xl font-bold mb-5">Enter Your New Password</h2>
-        {success ? (
-          <p className="text-green-400">
-            your password have been changed successfully
-          </p>
-        ) : (
-          ""
-        )}
         <input
           className="border px-3 py-1 focus:outline-none"
           type="password"

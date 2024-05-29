@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 const LogoutButton = () => {
   const router = useRouter();
   // functions
@@ -8,10 +9,14 @@ const LogoutButton = () => {
     try {
       const res = await axios.get("/api/users/logout");
       if (res.data?.success) {
-        router.replace("/login");
+        toast.success("you logged out successfully");
+        setTimeout(() => {
+          router.replace("/login");
+        }, 2000);
       }
     } catch (error) {
       console.log(error);
+      toast.error("something went wronge please try agine");
     }
   };
   return (

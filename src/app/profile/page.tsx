@@ -3,6 +3,7 @@ import axios from "axios";
 import LogoutButton from "@/components/LogoutButton";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 type UserType = {
   email: string;
   _id: string;
@@ -23,6 +24,12 @@ const Profile = () => {
     };
     getUserData();
   }, []);
+  useEffect(() => {
+    if (user) {
+      if (!user?.isVerified) toast.error("your accunt is not verified");
+      else toast.success("your email is verified");
+    }
+  }, [user]);
   return (
     <section className="flex justify-center items-center min-h-screen">
       <div className="flex flex-col gap-5 items-center">
