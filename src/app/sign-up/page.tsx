@@ -1,49 +1,12 @@
-"use client";
 import Link from "next/link";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import Loader from "@/components/Loader";
-import toast from "react-hot-toast";
+import { SignUpAction } from "@/actions";
 const SignUp = () => {
-  const [user, setUser] = useState({
-    email: "",
-    username: "",
-    password: "",
-  });
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const router = useRouter();
-  // functions
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const { data } = await axios.post("/api/users/sign-up", {
-        username: user.username,
-        email: user.email,
-        password: user.password,
-      });
-      if (data) {
-        setSuccess(true);
-        toast.success("you signed up successfully");
-        setTimeout(() => {
-          router.replace("/login");
-        }, 2000);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("something went wronge please try agine");
-    } finally {
-      setLoading(false);
-    }
-  };
   return (
     <section className="min-h-screen flex justify-center items-center">
       <form
         // action={onSignUpAction}
         className="flex flex-col items-center gap-8"
-        onSubmit={onSubmit}
+        action={SignUpAction}
       >
         <h1 className="text-6xl font-bold mb-5">Signup</h1>
         <div className="flex items-center gap-3 relative">
@@ -57,8 +20,6 @@ const SignUp = () => {
             name="username"
             placeholder="username"
             required
-            value={user.username}
-            onChange={(e) => setUser({ ...user, username: e.target.value })}
           />
         </div>
         <div className="flex items-center gap-3  relative">
@@ -72,8 +33,6 @@ const SignUp = () => {
             name="email"
             placeholder="email"
             required
-            value={user.email}
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
           />
         </div>
         <div className="flex items-center gap-3 relative">
@@ -87,17 +46,14 @@ const SignUp = () => {
             name="password"
             placeholder="password"
             required
-            value={user.password}
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
           />
         </div>
         <div className="flex flex-col gap-3 items-center">
           <button
             type="submit"
             className="bg-blue-500 flex justify-center items-center text-white px-5 py-2 font-bold"
-            disabled={loading || success}
           >
-            {loading ? <Loader /> : "signup"}
+            sign up
           </button>
           <Link href={"/login"} className="text-blue-500 underline">
             login

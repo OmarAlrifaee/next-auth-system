@@ -1,44 +1,9 @@
-"use client";
 import Link from "next/link";
-import axios from "axios";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Loader from "@/components/Loader";
-import toast from "react-hot-toast";
+import { LoginAction } from "@/actions";
 const Login = () => {
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const router = useRouter();
-  // functions
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const { data } = await axios.post("/api/users/login", {
-        email: user.email,
-        password: user.password,
-      });
-      if (data) {
-        setSuccess(true);
-        toast.success("you logged in successfully");
-        setTimeout(() => {
-          router.replace("/profile");
-        }, 2000);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("something went wronge please try agine");
-    } finally {
-      setLoading(false);
-    }
-  };
   return (
     <section className="min-h-screen flex justify-center items-center">
-      <form className="flex flex-col items-center gap-8" onSubmit={onSubmit}>
+      <form className="flex flex-col items-center gap-8" action={LoginAction}>
         <h1 className="text-6xl font-bold mb-5">Login</h1>
         <div className="relative">
           <label htmlFor="email" className="absolute top-[-24px]">
@@ -49,9 +14,8 @@ const Login = () => {
             type="email"
             id="email"
             placeholder="email"
-            value={user.email}
             required
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
+            name="email"
           />
         </div>
         <div className="relative">
@@ -64,17 +28,15 @@ const Login = () => {
             id="password"
             required
             placeholder="password"
-            value={user.password}
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
+            name="password"
           />
         </div>
         <div className="flex flex-col items-center gap-3">
           <button
             type="submit"
             className="bg-blue-500 px-5 py-2 text-white font-bold"
-            disabled={loading || success}
           >
-            {loading ? <Loader /> : "Login"}
+            login
           </button>
           <div className="flex items-center gap-10 w-full">
             <Link href={"/sign-up"} className="text-blue-500 underline">

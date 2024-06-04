@@ -1,9 +1,8 @@
-"use client";
-import axios from "axios";
 import LogoutButton from "@/components/LogoutButton";
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import toast from "react-hot-toast";
+import User from "@/models/usersModel";
+import { connect } from "@/dbConfig/dbConfig";
+import { getDataFromToken } from "@/helpers/getDataFromToken";
 type UserType = {
   email: string;
   _id: string;
@@ -11,25 +10,20 @@ type UserType = {
   isAdmin: boolean;
   isVerified: boolean;
 };
-const Profile = () => {
-  const [user, setUser] = useState<UserType>();
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const res = await axios.get("/api/users/current-user");
-        setUser(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getUserData();
-  }, []);
-  useEffect(() => {
-    if (user) {
-      if (!user?.isVerified) toast.error("your accunt is not verified");
-      else toast.success("your email is verified");
-    }
-  }, [user]);
+const getUser = async () => {
+  connect();
+  try {
+    // get the id of the user by the cookie
+    const id: string = await getDataFromToken();
+    // find the user in the db
+    const user = await User.findById(id).select("-password");
+    return user;
+  } catch (error: any) {
+    console.log(error.message);
+  }
+};
+const Profile = async () => {
+  const user: UserType = await getUser();
   return (
     <section className="flex justify-center items-center min-h-screen">
       <div className="flex flex-col gap-5 items-center">

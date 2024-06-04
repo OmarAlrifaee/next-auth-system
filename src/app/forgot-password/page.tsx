@@ -1,47 +1,21 @@
-"use client";
-import Loader from "@/components/Loader";
-import axios from "axios";
-import { useState } from "react";
-import toast from "react-hot-toast";
-
+import { ForgotPasswordAction } from "@/actions";
 const ForgotPassword = () => {
-  const [email, setEmail] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      await axios.post("/api/users/forgot-password", {
-        email,
-      });
-      setSuccess(true);
-      toast.success("the email was sent to your account");
-    } catch (error) {
-      setSuccess(false);
-      console.log(error);
-      toast.error("something went wronge please try agine");
-    } finally {
-      setLoading(false);
-    }
-  };
   return (
     <section className="min-h-screen flex flex-col items-center justify-center">
       <h2 className="font-bold text-4xl mb-5">Forgot Your Password?</h2>
-      <form onSubmit={onSubmit} className="flex flex-col items-center gap-5">
+      <form
+        action={ForgotPasswordAction}
+        className="flex flex-col items-center gap-5"
+      >
         <input
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          name="email"
           placeholder="your email"
           className="border px-3 py-1 focus:outline-none"
           required
         />
-        <button
-          className="bg-blue-500 px-5 py-2 text-white font-bold"
-          disabled={loading || success}
-        >
-          {loading ? <Loader /> : "Submit"}
+        <button className="bg-blue-500 px-5 py-2 text-white font-bold">
+          submit
         </button>
       </form>
     </section>
