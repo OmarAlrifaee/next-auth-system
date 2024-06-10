@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LoginAction } from "@/actions";
+import SubmitButton from "@/components/SubmitButton";
 const Login = () => {
   return (
     <section className="min-h-screen flex justify-center items-center">
@@ -32,12 +33,7 @@ const Login = () => {
           />
         </div>
         <div className="flex flex-col items-center gap-3">
-          <button
-            type="submit"
-            className="bg-blue-500 px-5 py-2 text-white font-bold"
-          >
-            login
-          </button>
+          <SubmitButton title="Login" />
           <div className="flex items-center gap-10 w-full">
             <Link href={"/sign-up"} className="text-blue-500 underline">
               Signup

@@ -1,4 +1,5 @@
 import { VerifyPasswordAction } from "@/actions";
+import SubmitButton from "@/components/SubmitButton";
 const VerifyPassword = ({
   searchParams,
 }: {
@@ -21,12 +22,7 @@ const VerifyPassword = ({
           required
           name="password"
         />
-        <button
-          type="submit"
-          className="bg-blue-500 px-5 py-2 text-white font-bold"
-        >
-          submit
-        </button>
+        <SubmitButton title="Submit" />
       </form>
     </section>
   );

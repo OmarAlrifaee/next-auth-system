@@ -1,4 +1,5 @@
 import { ForgotPasswordAction } from "@/actions";
+import SubmitButton from "@/components/SubmitButton";
 const ForgotPassword = () => {
   return (
     <section className="min-h-screen flex flex-col items-center justify-center">
@@ -14,9 +15,7 @@ const ForgotPassword = () => {
           className="border px-3 py-1 focus:outline-none"
           required
         />
-        <button className="bg-blue-500 px-5 py-2 text-white font-bold">
-          submit
-        </button>
+        <SubmitButton title="Submit" />
       </form>
     </section>
   );

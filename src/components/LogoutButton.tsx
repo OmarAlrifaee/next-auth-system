@@ -1,11 +1,10 @@
 import { LogoutAction } from "@/actions";
+import SubmitButton from "./SubmitButton";
 
 const LogoutButton = () => {
   return (
     <form action={LogoutAction}>
-      <button className="bg-red-500 px-5 py-2 rounded-md text-white font-semibold">
-        Logout
-      </button>
+      <SubmitButton title="Logout" />
     </form>
   );
 };
